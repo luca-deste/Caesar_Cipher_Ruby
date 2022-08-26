@@ -11,12 +11,13 @@ end
 
 def encryptMessage(msg,places,direction)
   letters = 'abcdefghijklmnopqrstuvwxyz'
+  upletters = letters.upcase
   encrMessage = []
   message = msg.split('')
   places = places.to_i
   message.each do |letter|
-    if letters.include?(letter)
-      index = letters.index(letter)
+    if letters.include?(letter) || upletters.include?(letter)
+      index = letters.index(letter) || index = upletters.index(letter)
       if direction == 'r'
         puts 'right'
         newIndex = index + places
@@ -31,7 +32,11 @@ def encryptMessage(msg,places,direction)
           newIndex = (newIndex%letters.length)
         end
       end
-      encrMessage.push(letters[newIndex])
+      if letter == letter.upcase
+        encrMessage.push(upletters[newIndex])
+      else
+        encrMessage.push(letters[newIndex])
+      end
     else
       encrMessage.push(letter)
     end
@@ -39,7 +44,25 @@ def encryptMessage(msg,places,direction)
   return encrMessage.join('')
 end
 
-Message = askForOperators
+def askForMethod
+  puts "Hello User! What would you like to do today?"
+  puts "Encrypt or Decrypt? e/d"
+  result = gets.chomp
+  if result == 'e'
+    Message = askForOperators
+    secretMessage = encryptMessage(Message[:message_to_encode],Message[:places_number_to_shift],Message[:left_or_right])
+    puts secretMessage
+    puts "Do you need to do something else? y/n"
+    response = gets.chomp
+    if response == 'y'
+      askForMethod
+    else
+      puts "thanks for using this product, be kind and leave a star on github (https://github.com/luca-deste/Caesar_Cipher_Ruby) to support it! See you next time!"
+    end
+  elsif result == 'd'
+    puts 'not ready now'
+    
 
+Message = askForOperators
 secretMessage = encryptMessage(Message[:message_to_encode],Message[:places_number_to_shift],Message[:left_or_right])
 p secretMessage
