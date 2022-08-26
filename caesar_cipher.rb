@@ -49,8 +49,8 @@ def askForMethod
   puts "Encrypt or Decrypt? e/d"
   result = gets.chomp
   if result == 'e'
-    Message = askForOperators
-    secretMessage = encryptMessage(Message[:message_to_encode],Message[:places_number_to_shift],Message[:left_or_right])
+    message = askForOperators
+    secretMessage = encryptMessage(message[:message_to_encode],message[:places_number_to_shift],message[:left_or_right])
     puts secretMessage
     puts "Do you need to do something else? y/n"
     response = gets.chomp
@@ -61,8 +61,10 @@ def askForMethod
     end
   elsif result == 'd'
     puts 'not ready now'
-    
+  else
+    puts "We were not ready for this response!"
+  end
+end
 
-Message = askForOperators
-secretMessage = encryptMessage(Message[:message_to_encode],Message[:places_number_to_shift],Message[:left_or_right])
-p secretMessage
+    
+askForMethod
