@@ -44,6 +44,7 @@ def encryptMessage(msg,places,direction)
   return encrMessage.join('')
 end
 
+
 def askForMethod
   puts "Hello User! What would you like to do today?"
   puts "Encrypt or Decrypt? e/d"
@@ -60,7 +61,17 @@ def askForMethod
       puts "thanks for using this product, be kind and leave a star on github (https://github.com/luca-deste/Caesar_Cipher_Ruby) to support it! See you next time!"
     end
   elsif result == 'd'
-    puts 'not ready now'
+    puts 'To decrypt the secret message that you get just input the secret message, the number of times that the letters need to shift, and the direction opposite to the one choosed to encrypt.'
+    message = askForOperators
+    secretMessage = encryptMessage(message[:message_to_encode],message[:places_number_to_shift],message[:left_or_right])
+    puts secretMessage
+    puts "Do you need to do something else? y/n"
+    response = gets.chomp
+    if response == 'y'
+      askForMethod
+    else
+      puts "thanks for using this product, be kind and leave a star on github (https://github.com/luca-deste/Caesar_Cipher_Ruby) to support it! See you next time!"
+    end
   else
     puts "We were not ready for this response!"
   end
