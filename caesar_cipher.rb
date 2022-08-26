@@ -1,4 +1,3 @@
-letters = 'abcdefghijklmnopqrstuvwxyz'
 def askForOperators()
   response = {}
   puts "Write here your secret message"
@@ -9,33 +8,38 @@ def askForOperators()
   response[:left_or_right] = gets.chomp
   return response
 end
+
+def encryptMessage(msg,places,direction)
+  letters = 'abcdefghijklmnopqrstuvwxyz'
+  encrMessage = []
+  message = msg.split('')
+  places = places.to_i
+  message.each do |letter|
+    if letters.include?(letter)
+      index = letters.index(letter)
+      if direction == 'r'
+        puts 'right'
+        newIndex = index + places
+        p index
+        p places
+        if newIndex >= letters.length
+          newIndex = (newIndex%letters.length) 
+        end
+      else
+        newIndex = index - places
+        if newIndex < -letters.length
+          newIndex = (newIndex%letters.length)
+        end
+      end
+      encrMessage.push(letters[newIndex])
+    else
+      encrMessage.push(letter)
+    end
+  end
+  return encrMessage.join('')
+end
+
 Message = askForOperators
 
-#def encryptMessage(msg,places,direction)
-message = Message[:message_to_encode].split('')
-idx = Message[:places_number_to_shift].to_i
-encrMessage = []
-message.each do |letter|
-  if letters.include?(letter)
-    index = letters.index(letter)
-    if Message[:left_or_right] == 'r'
-      puts 'right'
-      newIndex = index + idx
-      p index
-      p idx
-      if newIndex >= letters.length
-        newIndex = (newIndex%letters.length) 
-      end
-    else
-      newIndex = index - idx
-      if newIndex < -letters.length
-        newIndex = (newIndex%letters.length)
-      end
-    end
-    encrMessage.push(letters[newIndex])
-  else
-    encrMessage.push(letter)
-  end
-end
-p message
-p encrMessage
+secretMessage = encryptMessage(Message[:message_to_encode],Message[:places_number_to_shift],Message[:left_or_right])
+p secretMessage
